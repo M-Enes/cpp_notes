@@ -78,3 +78,53 @@ or this
 ```cpp
 void print(int (&array)[4]);
 ```
+
+## How Strings Work in C++ (and how to use them) (31)
+
+
+```cpp
+char* message = "Hello"; // can be modified (not exactly, see below)
+const char* fixedmessage = "World"; // constant one (cannot be modified)
+```
+
+C-style strings created with char pointers like above are should be considered as constants. In fact, to avoid confusion (`const` ones gives error at compile time when any modification happens, but non-const ones not), all c-style strings should be defined as `const char*`. [see this answer at stackoverflow](https://stackoverflow.com/a/19071536)
+
+To create modifiable c-style strings use
+```cpp
+char message[] = "Hello"; // creates 6 sized char array with "Hello\0"
+char another[6] = "World"; // 5th index for '\0'
+```
+
+`'a'` denotes a char and `"a"` denotes a `const char*`. \
+`'\0'` (which is equal to integer 0) is the null termination character. It denotes strings end. If there is no `'\0'` at the end of a `const char*`, then functions such as `std::cout` get all bytes until they reach a `'\0'`. So, a memory violation happens. If there is no segfault, then garbage values will also be written on the screen.
+
+C++ have `std::string` which is mostly the optimal way for handling strings. It has functions like `size()`. \
+To concatenate strings, do not use
+```cpp
+std::string name = "Hello" + "World"; // this gives error
+```
+instead, use this
+```cpp
+std::string name = "Hello";
+name += "World";
+```
+or this
+```cpp
+std::string name = std::string("Hello") + "World";
+```
+
+To check if the string contains any substring:
+```cpp
+std::string name = "Hello World!";
+bool contains = name.find("lo") != std::string::npos;
+```
+
+To avoid memory and time overhead when copying strings, pass const references of strings to functions if possible (i.e. not changing the value of the string)
+```cpp
+void PrintString(const std::string& string) {
+  std::cout << string;
+}
+```
+
+
+
