@@ -158,3 +158,102 @@ const char* example = "Line1\n"
 "Line2\n"
 "Line3\n";
 ```
+
+## CONST in C++ (33)
+
+`const` is just a promise that something will remain constant.
+
+```cpp
+const int MAX_HEALTH = 100;
+MAX_HEALTH = 5; // this will give a compiler error
+```
+
+```cpp
+const int* a = new int; // a is a pointer to a constant integer
+
+*a = 3; // this will give a compiler error
+
+int number = 15;
+a = &number; // this will work nicely
+```
+
+```cpp
+int const* a = new int; // a is a pointer to a constant integer
+
+*a = 3; // this will give a compiler error
+
+int number = 15;
+a = &number; // this will work nicely
+```
+
+```cpp
+int* const a = new int; // a is a constant pointer to an integer
+
+*a = 3; // this will work nicely
+
+int number = 15;
+a = &number; // this will give a compiler error
+```
+
+```cpp
+int const* const a = new int; // a is a constant pointer to a constant integer
+
+*a = 3; // this will give a compiler error
+
+int number = 15;
+a = &number; // this will give a compiler error
+```
+
+Adding `const` at the end of the method signature makes member variables non-modifiable in that method.
+```cpp
+class Entity {
+private:
+	int* m_X;
+public:
+	const int* GetX() const {
+		*m_X = 5; // this will work nicely
+		m_X = &m_X; // this will give a compiler error
+		return m_X;
+	}
+};
+```
+It is useful to add `const` to the end of method signature to make it usable in situations like that:
+```cpp
+class Entity {
+private:
+	int* m_X;
+public:
+	const int* GetX() const { // return type is also const because we don't want the caller to change the value
+		return m_X;
+	}
+};
+
+void PrintEntity(const Entity& e) {
+	std::cout << e.GetX();
+}
+```
+But, if the method is defined like that:
+```cpp
+	const int* GetX() { // or int* GetX()
+		return m_X;
+	}
+```
+Then, the `e.GetX()` call in the PrintEntity function gives a compiler error. Because, there is no `GetX()` function with `const` keyword at the end of the signature.
+
+There is a way to change member variables values in the const method by making them mutable:
+```cpp
+class Entity {
+private:
+	int* m_X;
+	mutable bool m_X_Given;
+public:
+	Entity() {
+		m_X = new int(5);
+		m_X_Given = false;
+	}
+	int* getX() const {
+		m_X_Given = true;
+		return m_X;
+	}
+};
+```
