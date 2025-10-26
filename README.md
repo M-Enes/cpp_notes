@@ -127,4 +127,34 @@ void PrintString(const std::string& string) {
 ```
 
 
+## String Literals in C++ (32)
 
+`"Hello"` string literal is a `const char[6]` with a `'\0'` at the end (`"Hello\0"`). \
+`String literals` are always stored on the `const segment`.
+
+```cpp
+// normal string literal
+const char* name = "Hello"; // or u8"Hello"
+
+// wide character string literal
+const wchar_t* name = L"Hello";
+
+// with C++ 11
+const char16_t* name2 = u"Hello"; // UTF-16
+const char32_t* name3 = U"Hello"; // UTF-32
+```
+
+`R` is for raw string literals. It is useful when dealing with paragraphs etc.
+```cpp
+const char* example = R"Line1
+Line2
+Line3
+Line4";
+```
+
+Other way for processing multiline string literals:
+```cpp
+const char* example = "Line1\n"
+"Line2\n"
+"Line3\n";
+```
