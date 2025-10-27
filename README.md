@@ -367,3 +367,15 @@ If the object is too big or it is intended to control the objects lifetime manua
 `new` keyword is used for creating objects on heap.
 
 
+## The NEW Keyword in C++ (38)
+
+Do not use `malloc` or `free`. Just use `new` and `delete`. Almost every time, `new` and `delete` are enough and makes more sense to use. `new` allocates memory and returns a pointer pointing the start of that memory, and calls constructor. `delete` calls destructor.
+```cpp
+Entity* e = new Entity; // calls default constructor so equivalent with Entity* e = new Entity();
+Entity* e2 = new Entity("Test Name");
+Entity* entity_Array = new Entity[50];
+
+delete e;
+delete e2;
+delete[] entity_Array;
+```
