@@ -379,3 +379,34 @@ delete e;
 delete e2;
 delete[] entity_Array;
 ```
+
+## Implicit Conversion and the Explicit Keyword in C++ (39)
+
+C++ converts types implicitly if exactly one implicit conversion is enough. \
+Explicit constructor forbids it and forces explicitly casting to the type.
+```cpp
+class Player {
+private:
+	std::string m_Name;
+	int m_Age;
+public:
+	Player(const std::string& name) : m_Name(name), m_Age(-1) {}
+
+	Player(int age) : m_Name("Unknown"), m_Age(age) {}
+};
+
+void PrintPlayer(const Player& player) {
+	// Printing stuff
+}
+
+int main() {
+
+	PrintPlayer(22); // gives compiler error if we put explicit on constructor with int parameter
+	PrintPlayer(std::string("Cherno")); // gives compiler error if we put explicit on constructor with string parameter
+	PrintPlayer(Player("Cherno")); // works anyway because the constructor used directly
+	Player c = (Player)22; // works anyway because casting done explicitly
+
+	Player a = std::string("Cherno"); // gives compiler error if we put explicit on constructor with int parameter
+	Player b = 22; // gives compiler error if we put explicit on constructor with int parameter
+}
+```
