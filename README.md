@@ -281,3 +281,60 @@ It is copying the changed variable behind the scenes, so that the actual `x` doe
 		};
 	f();
 ```
+
+
+## Member Initializer Lists in C++ (Constructor Initializer List) (35)
+
+Member initializer lists are for initializing members not within a constructor but just before it. Use them if possible. The order of the member variables must be the same (if it does not, some compilers give an error, some not). Member variables initialized according to their definition order. So, if member initializer list does not comply with it, then object initialized twice (one with default constructor and one with in the member initializer list or in the constructor body) which is an overhead. (for primitives not much problem)
+```cpp
+class Entity3 {
+private:
+	std::string m_Name;
+	int m_X, m_Y, m_Z;
+
+public:
+	Entity3() : m_Name("Unkown"), m_X(0), m_Y(0), m_Z(0) {}
+
+	Entity3(const std::string& name) : m_Name(name), m_X(0), m_Y(0), m_Z(0) {}
+};
+```
+An example for initializing twice:
+```cpp
+class Entity3 {
+public:
+	Entity3() {
+		std::cout << "Default constructor of Entity3\n";
+	}
+
+	Entity3(const std::string& name) {
+		std::cout << "Constructor of Entity3 with name parameter\n";
+	}
+};
+
+class Entity4 {
+private:
+	Entity3 e;
+public:
+	Entity4() : e("RandomName") {}
+};
+```
+The output is:
+```
+Constructor of Entity3 with name parameter
+```
+
+```cpp
+class Entity4 {
+private:
+	Entity3 e;
+public:
+	Entity4() {
+		e = Entity3("RandomName");
+	}
+};
+```
+The output is:
+```
+Default constructor of Entity3
+Constructor of Entity3 with name parameter
+```
