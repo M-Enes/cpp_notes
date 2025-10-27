@@ -476,3 +476,8 @@ int main() {
 	}
 }
 ```
+
+
+## The "this" keyword in C++ (41)
+
+`this` keyword is a const pointer to the current object.
