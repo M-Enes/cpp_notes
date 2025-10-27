@@ -338,3 +338,21 @@ The output is:
 Default constructor of Entity3
 Constructor of Entity3 with name parameter
 ```
+
+
+## Ternary Operators in C++ (Conditional Assignment) (36)
+
+Ternary operator is basically a syntactic sugar for if else statements.
+
+```cpp
+int level = 1;
+int speed;
+
+if (level > 5) {
+	speed = 10;
+} else {
+	speed = 5;
+}
+
+speed = level > 5 ? 10 : 5; // does the same thing as the if else statement above
+```
