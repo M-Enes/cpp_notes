@@ -356,3 +356,14 @@ if (level > 5) {
 
 speed = level > 5 ? 10 : 5; // does the same thing as the if else statement above
 ```
+
+
+## How to CREATE/INSTANTIATE OBJECTS in C++ (37)
+
+There are two ways of creating objects: on stack or on heap. \
+Object does not have same meaning with Java objects in C++. [see stackoverflow answer refers to cpp standard](https://stackoverflow.com/a/43947032) \
+Use stack allocated variables if possible. It is the fast and manageable way(lifetime etc.) of creating objects. \
+If the object is too big or it is intended to control the objects lifetime manually, then using heap allocated variables might make sense. \
+`new` keyword is used for creating objects on heap.
+
+
