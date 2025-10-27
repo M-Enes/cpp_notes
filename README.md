@@ -257,3 +257,27 @@ public:
 	}
 };
 ```
+
+
+## The Mutable Keyword in C++ (34)
+
+Mutable has two different uses. First use is with `const`s. Check video 33 (CONST in C++). \
+The second use is with lambdas. When getting local variables with value (`[=]`), mutable makes them changeable.
+```cpp
+	int x = 0;
+	auto f = [=]() mutable {
+		x++;
+		std::cout << x;
+		};
+	f();
+```
+It is copying the changed variable behind the scenes, so that the actual `x` does not get changed (still `0`):
+```cpp
+	int x = 0;
+	auto f = [=]() {
+		int y = x;
+		y++;
+		std::cout << y;
+		};
+	f();
+```
