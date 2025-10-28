@@ -481,3 +481,28 @@ int main() {
 ## The "this" keyword in C++ (41)
 
 `this` keyword is a const pointer to the current object.
+
+
+## Object Lifetime in C++ (Stack/Scope Lifetimes) (42)
+
+Smart pointer is simply a pointer wrapper to delete heap-allocated objects when they goes out of scope. (like the stack-allocated ones)
+```cpp
+class ScopedPtr {
+private:
+	Entity* m_Ptr;
+public:
+	ScopedPtr(Entity* ptr) : m_Ptr(ptr) {}
+
+	~ScopedPtr() {
+		delete m_Ptr;
+	}
+};
+
+int main() {
+	{
+		ScopedPtr e = new Entity(); // an Entity object created on heap and its pointer implicitly casted to ScopedPtr
+	}
+	// e destroyed because it lies on stack, and because its destructor involves deleting the internal object
+	// the Entity object we created also deleted from heap
+}
+```
