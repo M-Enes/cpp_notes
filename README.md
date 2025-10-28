@@ -485,7 +485,7 @@ int main() {
 
 ## Object Lifetime in C++ (Stack/Scope Lifetimes) (42)
 
-Smart pointer is simply a pointer wrapper to delete heap-allocated objects when they goes out of scope. (like the stack-allocated ones)
+Scoped pointer is simply a pointer wrapper to delete heap-allocated objects when they goes out of scope. (like the stack-allocated ones)
 ```cpp
 class ScopedPtr {
 private:
