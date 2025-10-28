@@ -506,3 +506,31 @@ int main() {
 	// the Entity object we created also deleted from heap
 }
 ```
+
+
+## SMART POINTERS in C++ (std::unique_ptr, std::shared_ptr, std::weak_ptr) (43)
+
+**Unique pointer** is a scoped pointer, when scope of the object ends, it deletes that object. \
+**Unique pointer** have to be unique that means there must be one unique pointer pointing to the same object. \
+So, unique pointers cannot be copied. It avoids **use after free** or **double delete**.
+
+```cpp
+std::unique_ptr<Entity> entity1(new Entity());
+std::unique_ptr<Entity> entity2 = std::make_unique<Entity>(); // this way should be preferred because of exception safety
+```
+
+**Shared pointer** allows more than one **shared pointer** to point same object. \
+It is usually implemented with **reference counting**. When reference count becomes zero, the object gets deleted.
+
+Use second method because it does fewer allocations and ensures exception safety. \
+Also, it doesn't need to use the `new` keyword.
+```cpp
+std::shared_ptr<Entity> entity1(new Entity()); // do not use that
+std::shared_ptr<Entity> entity2 = std::make_shared<Entity>(); // use this
+```
+
+**Weak pointer** is used with **shared_pointer**. It does not increase **reference count**. \
+It is useful to avoid circular reference problem. It provides a way to check if an object **still exits**.
+
+If you want to automatically manage the heap-allocated variable, then use **smart pointers**. \
+Use **unique_ptr** whenever possible. Use **shared_ptr** to share between objects.
