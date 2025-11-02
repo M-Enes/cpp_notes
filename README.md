@@ -534,3 +534,38 @@ It is useful to avoid circular reference problem. It provides a way to check if 
 
 If you want to automatically manage the heap-allocated variable, then use **smart pointers**. \
 Use **unique_ptr** whenever possible. Use **shared_ptr** to share between objects.
+
+
+## Copying and Copy Constructors in C++ (44)
+
+Copy constructor is simply the constructor with a parameter that is a reference of the same class. It is used like that:
+```cpp
+String string = "Cherno";
+String second = string; // implicit call to copy constructor
+String third = String(string); // explicit call to copy constructor
+```
+
+By default, cpp provides an implicit copy constructor that makes shallow copy like that:
+```cpp
+class X: public Y
+{
+    private:
+        int     m_a;
+        char*   m_b;
+        Z       m_c;
+};
+
+X::X(X const& copy)
+    :Y(copy)            // Calls the base copy constructor
+    ,m_a(copy.m_a)      // Calls each members copy constructor
+    ,m_b(copy.m_b)
+    ,m_c(copy.m_c)
+{}
+```
+[also see](https://stackoverflow.com/a/1810320)
+
+If it is intended to have no copy constructor then declaring it as delete will do the trick (like the unique pointer does):
+```cpp
+String(const String& other) = delete;
+```
+
