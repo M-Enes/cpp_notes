@@ -569,3 +569,15 @@ If it is intended to have no copy constructor then declaring it as delete will d
 String(const String& other) = delete;
 ```
 
+## The Arrow Operator in C++ (45)
+
+Most common use case is:
+```cpp
+Entity e;
+e.Print();
+
+Entity* ptr = &e;
+(*ptr).Print();
+ptr->Print(); // same as (*ptr).Print();
+```
+Also, it could be overloaded. That is useful to create things like smart pointers.
