@@ -662,3 +662,7 @@ He explains the concept of static link by linking glfw.
 He explains the concept of dynamic linking by linking glfw. \
 There is also a challenge question about preprocessor statements for dynamic and static compilation.
 
+
+## Making and Working with Libraries in C++ (Multiple Projects in Visual Studio) (51)
+
+In the video, it shown that how to create one solution and multiple projects then handle static linking process among them.
