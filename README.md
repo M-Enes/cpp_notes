@@ -614,3 +614,39 @@ vertices.push_back({7,8,9}); // implicit conversion here
 [difference between emplace_back() and push_back()](https://stackoverflow.com/a/36919571) \
 [another explanation here](https://abseil.io/tips/112) \
 [yet another explanation](https://stackoverflow.com/a/32200517)
+
+
+## Local Static in C++ (48)
+
+```cpp
+void Function() {
+	static int i = 0;
+	i++;
+	std::cout << i << '\n';
+}
+
+int main() {
+	Function(); // 1
+	Function(); // 2
+	Function(); // 3
+	Function(); // 4
+	Function(); // 5
+}
+```
+
+```cpp
+class Singleton {
+public:
+	static Singleton& Get() {
+		static Singleton instance;
+		return instance;
+	}
+
+	void Hello() {}
+};
+
+
+int main() {
+	Singleton::Get().Hello();
+}
+```
