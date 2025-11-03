@@ -581,3 +581,8 @@ Entity* ptr = &e;
 ptr->Print(); // same as (*ptr).Print();
 ```
 Also, it could be overloaded. That is useful to create things like smart pointers.
+
+
+## Dynamic Arrays in C++ (std::vector) (46)
+
+Vector of pointers is a slow technique due to jumping around in memory. But, they are easy and fast to copy because they are just addresses. On the other hand, keeping stack-allocated objects directly in the vector is fast due to contiguous memory. But, copying them may be slow due to their size. Keeping stack-allocated objects is preffered way for most use cases.
