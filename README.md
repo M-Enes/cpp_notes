@@ -650,3 +650,8 @@ int main() {
 	Singleton::Get().Hello();
 }
 ```
+
+
+## Using Libraries in C++ (Static Linking) (49)
+
+He explains the concept of link by linking glfw.
