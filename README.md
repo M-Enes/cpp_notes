@@ -654,7 +654,7 @@ int main() {
 
 ## Using Libraries in C++ (Static Linking) (49)
 
-He explains the concept of link by linking glfw.
+He explains the concept of static link by linking glfw.
 
 
 ## Using Dynamic Libraries in C++ (50)
