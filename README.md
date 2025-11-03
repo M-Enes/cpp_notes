@@ -586,3 +586,31 @@ Also, it could be overloaded. That is useful to create things like smart pointer
 ## Dynamic Arrays in C++ (std::vector) (46)
 
 Vector of pointers is a slow technique due to jumping around in memory. But, they are easy and fast to copy because they are just addresses. On the other hand, keeping stack-allocated objects directly in the vector is fast due to contiguous memory. But, copying them may be slow due to their size. Keeping stack-allocated objects is preffered way for most use cases.
+
+## Optimizing the usage of std::vector in C++ (47)
+
+```cpp
+struct Vertex {
+	float x, y, z;
+
+	Vertex(float x, float y, float y)
+		: x(x), y(y), z(z) {}
+};
+
+
+// creates 3 Vertex objects with default constructor and copies them into the vector
+std::vector<Vertex> vertices_default(3);
+
+std::vector<Vertex> vertices;
+vertices.reserve(3); // reserves enough memory to 3 Vertex objects
+vertices.emplace_back(1,2,3); // creates a Vertex object directly within the memory of vector
+vertices.emplace_back(4,5,6);
+vertices.emplace_back(7,8,9);
+
+vertices.push_back(Vertex(1,2,3)); // creates a Vertex object and copies it into the vector
+vertices.push_back(Vertex(4,5,6));
+vertices.push_back({7,8,9}); // implicit conversion here
+```
+[difference between emplace_back() and push_back()](https://stackoverflow.com/a/36919571) \
+[another explanation here](https://abseil.io/tips/112) \
+[yet another explanation](https://stackoverflow.com/a/32200517)
