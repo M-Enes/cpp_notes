@@ -666,3 +666,94 @@ There is also a challenge question about preprocessor statements for dynamic and
 ## Making and Working with Libraries in C++ (Multiple Projects in Visual Studio) (51)
 
 In the video, it shown that how to create one solution and multiple projects then handle static linking process among them.
+
+
+## How to Deal with Multiple Return Values in C++ (52)
+
+First way, passing references of variables to the function:
+```cpp
+void DivideStringToHalves(const std::string& string, std::string& outFirstHalve, std::string& outSecondHalve) {
+	std::string firstHalve = string.substr(0, string.size() / 2);
+	std::string secondHalve = string.substr(string.size() / 2);
+
+	outFirstHalve = firstHalve;
+	outSecondHalve = secondHalve;
+}
+
+int main() {
+	std::string firstHalve, secondHalve;
+
+	DivideStringToHalves("Helloo", firstHalve, secondHalve);
+	std::cout << firstHalve << " " << secondHalve << '\n';
+	
+	DivideStringToHalves("Heloo", firstHalve, secondHalve);
+	std::cout << firstHalve << " " << secondHalve << '\n';
+
+}
+```
+
+By returning an array or vector:
+```cpp
+std::array<std::string, 2> DivideStringToHalves(const std::string& string) {
+	std::string firstHalve = string.substr(0, string.size() / 2);
+	std::string secondHalve = string.substr(string.size() / 2);
+
+	return std::array<std::string, 2>{firstHalve, secondHalve};
+}
+
+int main() {
+
+	std::array<std::string, 2> halves =  DivideStringToHalves("Helloo");
+	std::cout << halves[0] << " " << halves[1] << '\n';
+	
+	halves = DivideStringToHalves("Heloo");
+	std::cout << halves[0] << " " << halves[1] << '\n';
+
+}
+```
+
+By returning within a tuple or pair (pair is basically a tuple of two variables):
+```cpp
+std::tuple<std::string, std::string> DivideStringToHalves(const std::string& string) {
+	std::string firstHalve = string.substr(0, string.size() / 2);
+	std::string secondHalve = string.substr(string.size() / 2);
+
+	return std::make_tuple(firstHalve, secondHalve);
+}
+
+int main() {
+
+	std::tuple<std::string, std::string> halves =  DivideStringToHalves("Helloo");
+	std::cout << std::get<0>(halves) << " " << std::get<1>(halves) << '\n';
+	
+	halves = DivideStringToHalves("Heloo");
+	std::cout << std::get<0>(halves) << " " << std::get<1>(halves) << '\n';
+
+}
+```
+
+The way that Cherno (and I) like:
+```cpp
+struct TwoStringHalves {
+	std::string firstHalve;
+	std::string secondHalve;
+};
+
+
+TwoStringHalves DivideStringToHalves(const std::string& string) {
+	std::string firstHalve = string.substr(0, string.size() / 2);
+	std::string secondHalve = string.substr(string.size() / 2);
+
+	return { firstHalve, secondHalve };
+}
+
+int main() {
+
+	TwoStringHalves halves =  DivideStringToHalves("Helloo");
+	std::cout << halves.firstHalve << " " << halves.secondHalve << '\n';
+	
+	halves = DivideStringToHalves("Heloo");
+	std::cout << halves.firstHalve << " " << halves.secondHalve << '\n';
+
+}
+```
